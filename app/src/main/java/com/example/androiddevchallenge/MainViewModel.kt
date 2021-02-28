@@ -12,8 +12,14 @@ class MainViewModel: ViewModel() {
     val puppyList: LiveData<ArrayList<Puppy>>
         get() = _puppyList
 
+    val darkmode = mutableStateOf(false)
+
     init {
         _puppyList.value = Util.generateList()
+    }
+
+    fun toggle() {
+        darkmode.value = !darkmode.value
     }
 
 }

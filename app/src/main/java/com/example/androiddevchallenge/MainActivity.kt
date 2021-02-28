@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContent {
 
             val navController = rememberNavController()
+            val viewModel: MainViewModel = viewModel("MainVM")
+
             NavHost(
                 navController = navController,
                 startDestination = "puppyList",
@@ -23,13 +25,12 @@ class MainActivity : AppCompatActivity() {
                         route = Screen.PuppyListScreen.route
                     ) { navBackStackEntry ->
 
-                        val viewModel: MainViewModel = viewModel("MainVM")
-
                         PuppyListScreen(
                             navFunction = {
                                 navController.navigate(it)
                             },
-                            list = viewModel.puppyList.value
+                            list = viewModel.puppyList.value,
+                            viewModel = viewModel
                         )
                     }
 
@@ -40,7 +41,8 @@ class MainActivity : AppCompatActivity() {
                         })
                     ) { navBackStackEntry ->
                         PuppyDetailScreen(
-                            puppyId = navBackStackEntry.arguments?.getInt("brawlerId")
+                            puppyId = navBackStackEntry.arguments?.getInt("brawlerId"),
+                            viewModel = viewModel
                         )
                     }
                 }
